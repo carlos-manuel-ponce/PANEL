@@ -3,25 +3,28 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Acreditación por DNI • Ministerio de Educación</title>
+  <title>Acreditación</title>
+  <!-- Supabase JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{--azul:#3B65A3;--celeste:#56B4C6;--gris:#F5F8FB;--texto:#1A2A5B;--ok:#2ECC71;--error:#C0392B;}
   body{margin:0;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--celeste) 0%,var(--gris) 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--texto);}
   .card{
-  width:300px;
-  max-width:98vw;
-  background:#fff;
-  border-radius:18px;
-  box-shadow:0 10px 30px rgba(59,101,163,.25);
-  padding:34px 28px;
-  animation:fadeIn .6s ease-out;
-  transition:transform .3s ease, box-shadow .3s ease;
+    width:300px;
+    max-width:98vw;
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(59,101,163,.25);
+    padding:34px 28px;
+    animation:fadeIn .6s ease-out;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+
   @media(max-width:400px) {
     .card {
       width:98vw;
       padding:18px 8px;
     }
-  }
   }
   .card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(59,101,163,.35)}
   .card.success{box-shadow:0 0 0 3px rgba(86,180,198,.45),0 10px 28px rgba(0,0,0,.10)}
