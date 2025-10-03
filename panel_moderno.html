@@ -501,38 +501,40 @@
       // Renderizar sector 1 con lógica de color y número
       const sector1 = SECTORES[0];
       const sector2 = SECTORES[1];
-      const grid1 = document.createElement('div');
-      grid1.className = 'grid';
-      grid1.style.setProperty('--size', document.getElementById('zoom').value + 'px');
-      let filaIndex1 = 0;
-      let emptySeatCounter1 = 1;
-      for (let i = sector1.inicio; i <= sector1.fin; i += 10) {
-        for (let j = i; j < i + 10 && j <= sector1.fin; j++) {
-          const seat = document.createElement('div');
-          seat.className = 'seat';
-          seat.dataset.id = j;
-          seat.title = `Asiento ${j}`;
-          if (filaIndex1 < 2) {
-            seat.textContent = '';
-            seat.classList.add('color-azul');
-          } else {
-            seat.textContent = j;
-            if (filaIndex1 === 12) {
+        // Renderizar sector 1
+        const sector1 = SECTORES[0];
+        const grid1 = document.createElement('div');
+        grid1.className = 'grid';
+        grid1.style.setProperty('--size', document.getElementById('zoom').value + 'px');
+        let filaIndex1 = 0;
+        for (let i = sector1.inicio; i <= sector1.fin; i += 10) {
+          for (let j = i; j < i + 10 && j <= sector1.fin; j++) {
+            const seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.dataset.id = j;
+            seat.title = `Asiento ${j}`;
+            if (filaIndex1 < 2) {
+              seat.textContent = '';
               seat.classList.add('color-azul');
+            } else {
+              seat.innerHTML = `<span class='seat-num'>${j}</span>`;
+              if (filaIndex1 === 12) {
+                seat.classList.add('color-azul');
+              }
             }
+            seat.addEventListener('click', () => mostrarDetalle(seat));
+            grid1.appendChild(seat);
           }
-          seat.addEventListener('click', () => mostrarDetalle(seat));
-          grid1.appendChild(seat);
+          filaIndex1++;
         }
-        filaIndex1++;
-      }
-      document.getElementById('sector1Junta').appendChild(grid1);
-      // Renderizar sector 2 con lógica de color y número
-      const grid2 = document.createElement('div');
-      grid2.className = 'grid';
-      grid2.style.setProperty('--size', document.getElementById('zoom').value + 'px');
-      let filaIndex2 = 0;
-      let emptySeatCounter2 = 101;
+        document.getElementById('sector1Junta').appendChild(grid1);
+
+        // Renderizar sector 2
+        const sector2 = SECTORES[1];
+        const grid2 = document.createElement('div');
+        grid2.className = 'grid';
+        grid2.style.setProperty('--size', document.getElementById('zoom').value + 'px');
+        let filaIndex2 = 0;
         for (let i = sector2.inicio; i <= sector2.fin; i += 10) {
           for (let j = i; j < i + 10 && j <= sector2.fin; j++) {
             const seat = document.createElement('div');
@@ -546,7 +548,7 @@
               seat.textContent = '';
               seat.classList.add('color-azul');
             } else {
-              seat.textContent = j;
+              seat.innerHTML = `<span class='seat-num'>${j}</span>`;
               if (filaIndex2 === 12) {
                 seat.classList.add('color-azul');
               }
@@ -556,16 +558,7 @@
           }
           filaIndex2++;
         }
-      document.getElementById('sector2Junta').appendChild(grid2);
-    }
-
-    // Botón para alternar vista
-    document.addEventListener('DOMContentLoaded', function() {
-      let vistaJuntaActiva = false;
-      const btnVistaJunta = document.getElementById('btnVistaJunta');
-      btnVistaJunta.addEventListener('click', function() {
-        if (!vistaJuntaActiva) {
-          // Mostrar juntos, ocultar separados
+        document.getElementById('sector2Junta').appendChild(grid2);
           document.getElementById('sectors').style.display = 'none';
           renderSectoresJuntos();
           document.getElementById('sectorsJuntas').style.display = 'block';
