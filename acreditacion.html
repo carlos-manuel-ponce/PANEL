@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acreditación por DNI • Ministerio de Educación</title>
+<style>
+  :root{--azul:#3B65A3;--celeste:#56B4C6;--gris:#F5F8FB;--texto:#1A2A5B;--ok:#2ECC71;--error:#C0392B;}
+  body{margin:0;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--celeste) 0%,var(--gris) 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--texto);}
+  .card{
+  width:300px;
+  max-width:98vw;
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(59,101,163,.25);
+  padding:34px 28px;
+  animation:fadeIn .6s ease-out;
+  transition:transform .3s ease, box-shadow .3s ease;
+  @media(max-width:400px) {
+    .card {
+      width:98vw;
+      padding:18px 8px;
+    }
+  }
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(59,101,163,.35)}
+  .card.success{box-shadow:0 0 0 3px rgba(86,180,198,.45),0 10px 28px rgba(0,0,0,.10)}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  h1{font-size:1.4rem;margin:0 0 4px;color:var(--azul);text-align:center}
+    h1{font-size:1.4rem;margin:0 0 18px;color:var(--azul);text-align:center}
+  .sub{margin:0 0 18px;color:#5a6c92;font-size:.98rem;text-align:center}
+  .row{display:flex;gap:10px;align-items:center;justify-content:center;margin-top:10px;}
+  @media(max-width:460px){.row{flex-direction:column;align-items:stretch}}
+  input[type="number"]{
+    flex:1;
+    padding:13px 14px;
+    font-size:1.05rem;
+    border-radius:12px;
+    border:1.6px solid rgba(59,101,163,.25);
+    outline:none;
+    transition:all .3s ease;
+    box-shadow:inset 0 1px 3px rgba(0,0,0,.05);
+  }
+  input[type="number"]:focus{
+    border-color:var(--celeste);
+    box-shadow:0 0 10px rgba(86,180,198,.35), inset 0 1px 3px rgba(0,0,0,.05);
+    background:#f9fdff;
+  }
+  button{
+    background:linear-gradient(90deg,var(--azul) 0%,var(--celeste) 100%);
+    border:none;
+    color:#fff;
+    font-weight:700;
+    padding:13px 22px;
+    border-radius:12px;
+    cursor:pointer;
+    min-width:140px;
+    transition:all .25s ease;
+  }
+  button:hover{
+    transform:scale(1.04);
+    box-shadow:0 6px 14px rgba(59,101,163,.3);
+  }
+  button:disabled{opacity:.6;cursor:not-allowed;}
+  .msg{
+    font-size:.95rem;
+    margin:18px 2px 0;
+    padding:16px 18px;
+    border-radius:12px;
+    display:none;
+    line-height:1.6;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+  }
+  .msg.ok{display:block;color:#0f6b2b;background:#EAF8F0;border-left:5px solid var(--celeste)}
+  .msg.err{display:block;color:var(--error);background:#FDECEA;border-left:5px solid var(--error)}
+  .msg.ok strong{color:var(--azul)}
+    .campo-linea{
+      display:flex;
+      flex-direction:row;
+      justify-content:space-between;
+      align-items:center;
+      margin:10px 0;
+      gap:10px;
+      width:100%;
+      box-sizing:border-box;
+    }
+    .campo-linea strong {
+      font-weight:600;
+      color:var(--azul);
+      min-width:110px;
+      text-align:left;
+      font-size:0.98em;
+    }
+    .campo-linea span {
+      font-weight:500;
+      color:#1A2A5B;
+      margin-left:8px;
+      word-break:break-word;
+      text-align:right;
+      font-size:0.98em;
+      flex:1;
+    }
+  .btn-presente{
+    margin-top:16px;
+    background:linear-gradient(90deg,var(--celeste) 0%,#3B9DB2 100%);
+    color:#fff;
+    font-weight:600;
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    transition:all .25s ease;
+  }
+  .btn-presente:hover{
+    background:linear-gradient(90deg,#3B9DB2 0%,var(--celeste) 100%);
+    transform:translateY(-2px);
+    box-shadow:0 6px 14px rgba(86,180,198,.35);
+  }
+  .modal{
+    position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .3s ease;
+  }
+  .modal.active{visibility:visible;opacity:1}
+  .modal-content{
+    background:#fff;padding:26px 30px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.25);text-align:center;animation:fadeIn .4s ease;
+  }
+  .modal-content h3{color:var(--azul);margin-top:0}
+</style>
+</head>
+<body>
+  <header style="width:100%;text-align:center;margin-bottom:24px;">
+    <img src="LOGO NUEVO COLOR_122003.png" alt="Logo Ministerio de Educación" style="width:180px;height:auto;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(59,101,163,0.18));">
+  </header>
+  <main class="card" id="card">
+    <h1>Acreditación</h1>
+    <p class="sub">Verifique la asistencia ingresando el número de documento del directivo.</p>
+    <div class="row">
+      <input id="dni" type="number" inputmode="numeric" maxlength="8" placeholder="Ingrese número de documento" />
+      <button id="btn" disabled>Buscar</button>
+    </div>
+    <div id="msg" class="msg"></div>
+  </main>
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3>Asistencia registrada</h3>
+      <p>El directivo fue acreditado correctamente.</p>
+      <button onclick="cerrarModal()">Aceptar</button>
+    </div>
+  </div>
+<script>
+
+// Supabase client setup
+const SUPABASE_URL = 'https://csbcfhwdpstnofvsfqwh.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzYmNmaHdkcHN0bm9mdnNmcXdoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYxMjkzODcsImV4cCI6MjA3MTcwNTM4N30.lX166U64tFeqKd6snFduL-oXWD_LXwzPMyQYVF3g8ek';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Remove local ASPIRANTES object, will use Supabase instead
+
+const $dni = document.getElementById('dni');
+const $btn = document.getElementById('btn');
+const $msg = document.getElementById('msg');
+const $card = document.getElementById('card');
+const $modal = document.getElementById('modal');
+
+
+window.addEventListener('load', () => $dni.focus());
+$dni.addEventListener('input', () => { $btn.disabled = $dni.value.length < 7 });
+$dni.addEventListener('keyup', e => { if (e.key === 'Enter' && !$btn.disabled) buscar(); });
+$btn.addEventListener('click', buscar);
+
+function buscar() {
+  const dni = $dni.value.trim();
+  if (!dni) return showError('Debe ingresar un DNI.');
+  supabase
+    .from('asistencia')
+    .select('*')
+    .eq('dni', dni)
+    .single()
+    .then(({ data, error }) => {
+      if (error || !data) return showError('No se encontró ningún registro con ese DNI.');
+      showOk(`
+        <div class='campo-linea'><strong>Aspirante:</strong> <span>${data.aspirante}</span></div>
+        <div class='campo-linea'><strong>Cargo:</strong> <span>${data.cargo}</span></div>
+        <div class='campo-linea'><strong>Establecimiento:</strong> <span>${data.establecimiento}</span></div>
+        <div class='campo-linea'><strong>Región:</strong> <span>${data.region}</span></div>
+        <div class='campo-linea'><strong>Lugar:</strong> <span>Asiento ${data.asiento} — ${data.sector}</span></div>
+        <button class='btn-presente' onclick='darPresente("${data.dni}")'>Dar presente</button>`);
+      flashSuccess();
+      $dni.value = '';
+      $btn.disabled = true;
+    });
+}
+function showOk(html) {
+  $msg.className = 'msg ok';
+  $msg.innerHTML = html;
+}
+function showError(txt) {
+  $msg.className = 'msg err';
+  $msg.textContent = txt;
+}
+function flashSuccess() {
+  $card.classList.add('success');
+  setTimeout(() => { $card.classList.remove('success') }, 1000);
+}
+function darPresente(dni) {
+  if (!dni) return;
+  supabase
+    .from('asistencia')
+    .update({ presente: true })
+    .eq('dni', dni)
+    .then(({ error }) => {
+      if (error) return showError('Error al registrar la asistencia.');
+      $modal.classList.add('active');
+    });
+}
+function cerrarModal() {
+  $modal.classList.remove('active');
+  $msg.innerHTML = '';
+  $msg.className = 'msg';
+  $dni.focus();
+}
+</script>
+</body>
+</html>

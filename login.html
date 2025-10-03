@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Acceso al Sistema • Registro de Asistencias</title>
+<style>
+  :root{--azul:#3B65A3;--celeste:#56B4C6;--gris:#F5F8FB;--texto:#1A2A5B;}
+  body{margin:0;font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--celeste) 0%,var(--gris) 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--texto);}
+  .card{width:300px;max-width:98vw;background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(59,101,163,.25);padding:40px 30px;text-align:center;animation:fadeIn .6s ease-out;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+  h1{font-size:1.4rem;margin-bottom:8px;color:var(--azul);}
+  .sub{font-size:0.95rem;color:#5A6C92;margin-bottom:22px;}
+  input[type="password"]{display:block;margin:0 auto;width:100%;padding:14px 0;border-radius:12px;border:1.5px solid rgba(59,101,163,.25);font-size:1.2rem;outline:none;text-align:center;letter-spacing:8px;transition:all .3s ease;}
+  input[type="password"]:focus{border-color:var(--celeste);box-shadow:0 0 10px rgba(86,180,198,.35);background:#f9fdff;}
+  button{margin-top:18px;width:100%;padding:14px 0;border:none;border-radius:12px;background:linear-gradient(90deg,var(--azul),var(--celeste));color:#fff;font-weight:700;font-size:1rem;cursor:pointer;transition:all .25s ease;}
+  button:hover{transform:scale(1.03);box-shadow:0 6px 14px rgba(59,101,163,.3);}
+  .footer{margin-top:16px;font-size:0.78rem;color:#5A6C92;}
+</style>
+</head>
+<body>
+  <div style="width:300px;max-width:98vw;text-align:center;margin-bottom:12px;">
+    <img src="LOGO NUEVO COLOR_122003.png" alt="Logo Ministerio de Educación" style="width:180px;height:auto;object-fit:contain;filter:drop-shadow(0 2px 8px rgba(59,101,163,0.18));">
+  </div>
+  <main class="card">
+    <h1>Acceso al Sistema</h1>
+    <p class="sub">Ingrese su código de acceso para continuar</p>
+    <input type="password" id="pin" placeholder="••••" maxlength="4" />
+    <button onclick="login()">Ingresar</button>
+  <div class="footer">Ministerio de Educación de la Provincia de San Luis.</div>
+  </main>
+<script>
+function login() {
+  const pin = document.getElementById('pin').value.trim();
+  if (pin === '1212') {
+    window.location.href = 'acreditacion.html';
+  } else if (pin === '1010') {
+    window.location.href = 'panel_moderno.html';
+  } else {
+    alert('Código incorrecto. Intente nuevamente.');
+  }
+}
+</script>
+</body>
+</html>
