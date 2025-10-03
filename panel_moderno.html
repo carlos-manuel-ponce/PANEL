@@ -469,6 +469,11 @@
   </dialog>
 
   <script>
+  // Renderizar sectores al cargar la página
+  document.addEventListener('DOMContentLoaded', () => {
+    crearSectores();
+    cargarDatos();
+  });
   btnVistaJunta.addEventListener('click', () => {
     if (!vistaJuntaActiva) {
       document.getElementById('sectors').style.display = 'none';
