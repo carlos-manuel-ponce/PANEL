@@ -788,12 +788,12 @@
     // Inicialización
     crearSectores();
     cargarDatos().then(() => {
-      // Mostrar vista juntos por defecto
-      vistaJuntaActiva = false;
-      document.getElementById('sectors').style.display = 'none';
-      document.getElementById('sectorsJuntas').style.display = 'block';
-      renderSectoresJuntos();
-      btnVistaJunta.textContent = 'Vista Sectores Separados';
+  // Mostrar sectores separados por defecto
+  vistaJuntaActiva = false;
+  document.getElementById('sectors').style.display = 'grid';
+  document.getElementById('sectorsJuntas').style.display = 'none';
+  crearSectores();
+  btnVistaJunta.textContent = 'Vista Sectores Juntos';
       actualizarAsientosPresentes();
       suscribirCambios();
     });
