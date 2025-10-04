@@ -56,11 +56,12 @@
       gap:18px;
       justify-content:space-between;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:16px;
-    }
+    .brand {
+  justify-content: flex-start;
+}
+.title {
+  text-align: left;
+}
     .metrics{
       display:flex;
       gap:24px;
@@ -260,7 +261,6 @@
     @media(max-width:480px){.grid{--size:24px;gap:4px}.seat{font-size:.6rem}.sector{padding:12px}.modal-body{padding:16px}}
   </style>
 </head>
-<body>
 </body>
   <header>
     <div class="wrap topbar">
@@ -401,6 +401,11 @@ function renderSectoresJuntos() {
         seat.classList.add('color-naranja');
         seat.textContent = '';
       }
+      // Fila 2 del Sector 1: columna 5 en negro
+      else if (fila === 2 && col === 5) {
+        seat.classList.add('color-negro');
+        seat.textContent = '';
+      }
       // Filas 1 y 2 en azul
       else if (fila <= 2) {
         seat.textContent = '';
@@ -422,7 +427,6 @@ function renderSectoresJuntos() {
           seat.textContent = nums[col - 7];
           seat.dataset.id = seat.textContent;
           seat.title = `Asiento ${seat.textContent}`;
-          seat.classList.add('absent'); // Rojo
         }
       }
       seat.addEventListener('click', () => mostrarDetalle(seat));
@@ -489,14 +493,19 @@ function crearSectores() {
 
         // Fila 1 del Sector 1: columnas 5 y 6 en naranja
         if (fila === 1 && index === 0 && (col === 5 || col === 6)) {
-          seat.classList.add('color-naranja');
-          seat.textContent = '';
-        }
-        // Filas 1 y 2 en azul
-        else if (fila <= 2) {
-          seat.textContent = '';
-          seat.classList.add('color-azul');
-        }
+  seat.classList.add('color-naranja');
+  seat.textContent = '';
+}
+// Fila 2 del Sector 1: columna 5 en negro
+else if (fila === 2 && index === 0 && col === 5) {
+  seat.classList.add('color-negro');
+  seat.textContent = '';
+}
+// Filas 1 y 2 en azul
+else if (fila <= 2) {
+  seat.textContent = '';
+  seat.classList.add('color-azul');
+}
         // Filas 3 a 12 numeradas en orden inverso
         else if (fila >= 3 && fila <= 12) {
           if (index === 0) {
@@ -554,12 +563,14 @@ function cerrar() {
   overlay.classList.remove('show');
 }
 // Mostrar detalle de asiento
-function mostrarDetalle(seat) {
+  function mostrarDetalle(seat) {
   const id = seat.dataset.id;
   const registro = Object.values(dataAsistencia).find(info => String(info.asiento) === String(id));
-  if (registro && id >= 1 && id <= 205) {
+  if (registro) {
     detalleInfo.innerHTML = `
-      <div class="info-grid">
+       <div class="info-grid">
+        <span class="info-label">DNI:</span>
+        <span class="info-value">${registro.dni}</span>
         <span class="info-label">Aspirante:</span>
         <span class="info-value">${registro.aspirante}</span>
         <span class="info-label">Cargo:</span>
@@ -607,9 +618,9 @@ async function cargarDatos() {
       .select('*');
     if (error) throw error;
     dataAsistencia = {};
-    data.forEach(registro => {
-      dataAsistencia[registro.dni] = registro;
-    });
+  data.forEach(registro => {
+  dataAsistencia[registro.asiento] = registro;
+});
     actualizarEstadisticas();
     actualizarAsientosPresentes();
   } catch (error) {
